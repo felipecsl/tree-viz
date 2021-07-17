@@ -71,8 +71,8 @@ function drawNode(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
   node: TreeNode<string>,
-  xDepth: number, // x depth starts at 0 for root node
-  yDepth: number, // y depth starts at 0 for root node
+  xDepth: number,
+  yDepth: number,
   treeHeight: number
 ) {
   const { width, height } = canvas.getBoundingClientRect();
@@ -81,7 +81,6 @@ function drawNode(
   const quadrantHeight = yDepth * levelHeight;
   const x = quadrantWidth * xDepth + quadrantWidth / 2;
   const y = quadrantHeight / 2 + FONT_SIZE;
-  console.log(`xDepth=${xDepth}, data=${node.data}, x=${x}, y=${y}`);
   writeNode(ctx, node, x, y);
   if (node.left) {
     drawLineLeftChild(ctx, x, y, quadrantWidth, levelHeight);
