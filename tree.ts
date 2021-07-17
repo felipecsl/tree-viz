@@ -47,10 +47,9 @@ function drawLineLeftChild(
   const x = _x + 10;
   ctx.beginPath();
   ctx.moveTo(x, y + 10);
-  ctx.lineTo(x + 1, y + 10);
-  ctx.lineTo(x + 1 - quadrantWidth / 4, y + 1 + levelHeight / 2 - FONT_SIZE);
   ctx.lineTo(x - quadrantWidth / 4, y + levelHeight / 2 - FONT_SIZE);
-  ctx.fill();
+  ctx.lineWidth = 2;
+  ctx.stroke();
 }
 
 function drawLineRightChild(
@@ -63,10 +62,9 @@ function drawLineRightChild(
   const x = _x + 10;
   ctx.beginPath();
   ctx.moveTo(x, y + 10);
-  ctx.lineTo(x + 1, y + 10);
-  ctx.lineTo(x + 1 + quadrantWidth / 4, y + 1 + levelHeight / 2 - FONT_SIZE);
-  ctx.lineTo(x + quadrantWidth / 4, y + levelHeight / 2 - FONT_SIZE);
-  ctx.fill();
+  ctx.lineTo(x + 1 + quadrantWidth / 4, y + levelHeight / 2 - FONT_SIZE);
+  ctx.lineWidth = 2;
+  ctx.stroke();
 }
 
 function drawNode(
