@@ -13,11 +13,17 @@ class TreeNode<T> {
 const FONT_SIZE = 30;
 
 function makeTree(): TreeNode<string> {
-  const treeNode = new TreeNode(
-    "A",
-    new TreeNode("B", new TreeNode("D"), new TreeNode("E")),
-    new TreeNode("C", new TreeNode("F"), new TreeNode("G"))
+  const b = new TreeNode(
+    "B",
+    new TreeNode("D", new TreeNode("X"), new TreeNode("Y")),
+    new TreeNode("E", new TreeNode("H"), new TreeNode("T"))
   );
+  const c = new TreeNode(
+    "C",
+    new TreeNode("F", new TreeNode("I"), new TreeNode("J")),
+    new TreeNode("G", new TreeNode("K"), new TreeNode("L"))
+  );
+  const treeNode = new TreeNode("A", b, c);
   return treeNode;
 }
 
@@ -31,6 +37,38 @@ function treeHeight<T>(root: TreeNode<T>, currDepth: number = 0): number {
   );
 }
 
+function drawLineLeftChild(
+  ctx: CanvasRenderingContext2D,
+  _x: number,
+  y: number,
+  quadrantWidth: number,
+  levelHeight: number
+) {
+  const x = _x + 10;
+  ctx.beginPath();
+  ctx.moveTo(x, y + 10);
+  ctx.lineTo(x + 1, y + 10);
+  ctx.lineTo(x + 1 - quadrantWidth / 4, y + 1 + levelHeight / 2 - FONT_SIZE);
+  ctx.lineTo(x - quadrantWidth / 4, y + levelHeight / 2 - FONT_SIZE);
+  ctx.fill();
+}
+
+function drawLineRightChild(
+  ctx: CanvasRenderingContext2D,
+  _x: number,
+  y: number,
+  quadrantWidth: number,
+  levelHeight: number
+) {
+  const x = _x + 10;
+  ctx.beginPath();
+  ctx.moveTo(x, y + 10);
+  ctx.lineTo(x + 1, y + 10);
+  ctx.lineTo(x + 1 + quadrantWidth / 4, y + 1 + levelHeight / 2 - FONT_SIZE);
+  ctx.lineTo(x + quadrantWidth / 4, y + levelHeight / 2 - FONT_SIZE);
+  ctx.fill();
+}
+
 function drawNode(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
@@ -40,17 +78,19 @@ function drawNode(
   treeHeight: number
 ) {
   const { width, height } = canvas.getBoundingClientRect();
-  const quadrantWidth = width / Math.pow(2, yDepth) - FONT_SIZE / 2;
-  const levelHeight = height / (treeHeight + 1);
+  const quadrantWidth = width / Math.pow(2, yDepth);
+  const levelHeight = height / (treeHeight - 1);
   const quadrantHeight = yDepth * levelHeight;
   const x = quadrantWidth * xDepth + quadrantWidth / 2;
   const y = quadrantHeight / 2 + FONT_SIZE;
   console.log(`xDepth=${xDepth}, data=${node.data}, x=${x}, y=${y}`);
   writeNode(ctx, node, x, y);
   if (node.left) {
+    drawLineLeftChild(ctx, x, y, quadrantWidth, levelHeight);
     drawNode(canvas, ctx, node.left, 2 * xDepth, yDepth + 1, treeHeight);
   }
   if (node.right) {
+    drawLineRightChild(ctx, x, y, quadrantWidth, levelHeight);
     drawNode(canvas, ctx, node.right, 2 * xDepth + 1, yDepth + 1, treeHeight);
   }
 }
