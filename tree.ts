@@ -11,20 +11,24 @@ class TreeNode<T> {
 }
 
 const FONT_SIZE = 30;
+const makeNode = (
+  data: string,
+  left: TreeNode<string> = null,
+  right: TreeNode<string> = null
+) => new TreeNode(data, left, right);
 
 function makeTree(): TreeNode<string> {
   const b = new TreeNode(
     "B",
-    new TreeNode("D", new TreeNode("X"), new TreeNode("Y")),
-    new TreeNode("E", new TreeNode("H"), new TreeNode("T"))
+    makeNode("D", makeNode("X"), makeNode("Y")),
+    makeNode("E", makeNode("H"), makeNode("T"))
   );
-  const c = new TreeNode(
+  const c = makeNode(
     "C",
-    new TreeNode("F", new TreeNode("I"), new TreeNode("J")),
-    new TreeNode("G", new TreeNode("K"), new TreeNode("L"))
+    makeNode("F", makeNode("I"), makeNode("J")),
+    makeNode("G", makeNode("K"), makeNode("L"))
   );
-  const treeNode = new TreeNode("A", b, c);
-  return treeNode;
+  return makeNode("A", b, c);
 }
 
 /* returns the total number of tree levels below this node */
