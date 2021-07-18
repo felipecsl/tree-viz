@@ -38,16 +38,13 @@ function drawLineRightChild(ctx, _x, y, quadrantWidth, levelHeight) {
     ctx.lineWidth = 2;
     ctx.stroke();
 }
-function drawNode(canvas, ctx, node, xDepth, // x depth starts at 0 for root node
-yDepth, // y depth starts at 0 for root node
-treeHeight) {
+function drawNode(canvas, ctx, node, xDepth, yDepth, treeHeight) {
     var _a = canvas.getBoundingClientRect(), width = _a.width, height = _a.height;
     var quadrantWidth = width / Math.pow(2, yDepth);
     var levelHeight = height / (treeHeight - 1);
     var quadrantHeight = yDepth * levelHeight;
     var x = quadrantWidth * xDepth + quadrantWidth / 2;
     var y = quadrantHeight / 2 + FONT_SIZE;
-    console.log("xDepth=" + xDepth + ", data=" + node.data + ", x=" + x + ", y=" + y);
     writeNode(ctx, node, x, y);
     if (node.left) {
         drawLineLeftChild(ctx, x, y, quadrantWidth, levelHeight);
@@ -59,8 +56,12 @@ treeHeight) {
     }
 }
 function writeNode(ctx, treeNode, x, y) {
+    var radius = 23;
     ctx.font = FONT_SIZE + "px serif";
     ctx.fillText(treeNode.data, x, y);
+    ctx.beginPath();
+    ctx.arc(x + radius / 3, y - radius / 3, radius, 0, 2 * Math.PI);
+    ctx.stroke();
 }
 function drawTree(canvasId, root) {
     var canvas = document.getElementById(canvasId);

@@ -98,8 +98,12 @@ function writeNode(
   x: number,
   y: number
 ) {
+  const radius = 23;
   ctx.font = `${FONT_SIZE}px serif`;
   ctx.fillText(treeNode.data, x, y);
+  ctx.beginPath();
+  ctx.arc(x + radius / 3, y - radius / 3, radius, 0, 2 * Math.PI);
+  ctx.stroke();
 }
 
 function drawTree(canvasId: string, root: TreeNode<string>) {
