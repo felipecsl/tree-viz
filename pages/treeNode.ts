@@ -1,9 +1,13 @@
-class TreeNode<T> {
+export class TreeNode<T> {
   readonly data: T;
-  readonly left?: TreeNode<T>;
-  readonly right?: TreeNode<T>;
+  readonly left?: TreeNode<T> | null;
+  readonly right?: TreeNode<T> | null;
 
-  constructor(data: T, left: TreeNode<T> = null, right: TreeNode<T> = null) {
+  constructor(
+    data: T,
+    left: TreeNode<T> | null = null,
+    right: TreeNode<T> | null = null
+  ) {
     this.data = data;
     this.left = left;
     this.right = right;
@@ -13,11 +17,11 @@ class TreeNode<T> {
 const FONT_SIZE = 30;
 const makeNode = (
   data: string,
-  left: TreeNode<string> = null,
-  right: TreeNode<string> = null
+  left: TreeNode<string> | null = null,
+  right: TreeNode<string> | null = null
 ) => new TreeNode(data, left, right);
 
-function makeTree(): TreeNode<string> {
+export function makeTree(): TreeNode<string> {
   const b = new TreeNode(
     "B",
     makeNode("D", makeNode("X"), makeNode("Y")),
@@ -110,11 +114,12 @@ function writeNode(
   ctx.stroke();
 }
 
-function drawTree(canvasId: string, root: TreeNode<string>) {
-  const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
+export function drawTree(canvas: HTMLCanvasElement, root: TreeNode<string>) {
   if (canvas.getContext) {
     const ctx = canvas.getContext("2d");
-    const totalTreHeight = treeHeight(root);
-    drawNode(canvas, ctx, root, 0, 0, totalTreHeight);
+    if (ctx) {
+      const totalTreHeight = treeHeight(root);
+      drawNode(canvas, ctx, root, 0, 0, totalTreHeight);
+    }
   }
 }
